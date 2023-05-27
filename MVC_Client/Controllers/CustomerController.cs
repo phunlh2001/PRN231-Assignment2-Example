@@ -56,20 +56,17 @@ namespace MVC_Client.Controllers
             if (ModelState.IsValid)
             {
                 var cus = new Customer();
+
                 if (gender == "Male")
-                {
                     cus.Gender = Gender.Male;
-                }
                 else
-                {
                     cus.Gender = Gender.Female;
-                }
 
                 cus.Username = obj.Username;
                 cus.Password = obj.Password;
-                cus.Fullname = obj.Fullname;
-                cus.Address = obj.Address;
-                cus.Birthday = DateTime.Parse(obj.Birthday).ToString("dd/MM/yyyy");
+                cus.Fullname = obj.Fullname!;
+                cus.Address = obj.Address!;
+                cus.Birthday = DateTime.Parse(obj.Birthday!).ToString("dd/MM/yyyy");
 
                 HttpResponseMessage res = await client.PostApi(cus, $"{api}/add");
                 if (res.StatusCode == HttpStatusCode.Created)
@@ -99,18 +96,17 @@ namespace MVC_Client.Controllers
          * Update View
         */
         [HttpPost("edit/{id}")]
-        public async Task<IActionResult> Update(int id, bool gender, CustomerViewModel obj)
+        public async Task<IActionResult> Update(int id, string gender, CustomerViewModel obj)
         {
             var cus = await client.GetApi<CustomerViewModel>($"{api}/{id}");
             if (ModelState.IsValid)
             {
-                if (gender)
-                    obj.Gender = "Male";
-                else
-                    obj.Gender = "Female";
+                obj.Gender = gender;
 
-                if (obj.Birthday != null) 
+                if (obj.Birthday != null)
                     obj.Birthday = DateTime.Parse(obj.Birthday).ToString("dd/MM/yyyy");
+                else
+                    obj.Birthday = cus.Birthday;
 
                 HttpResponseMessage res = await client.PatchApi(obj, $"{api}/{id}");
                 if (res.StatusCode == HttpStatusCode.OK)
