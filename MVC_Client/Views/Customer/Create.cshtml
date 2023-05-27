@@ -1,0 +1,39 @@
+﻿@model CustomerViewModel
+
+@{
+    ViewData["Title"] = "Create Page";
+}
+
+<form method="post" action="add">
+    Username: <input type="text" asp-for="Username" class="form-control" />
+    <span asp-validation-for="Username" class="text-danger"></span> <br />
+
+    Password: <input type="password" asp-for="Password" class="form-control" />
+    <span asp-validation-for="Password" class="text-danger"></span> <br />
+
+    Full name: <input type="text" asp-for="Fullname" class="form-control" />
+    <span asp-validation-for="Fullname" class="text-danger"></span> <br />
+
+    Gender: <div class="form-check">
+      <input class="form-check-input" type="radio" name="gender" id="Male" value="Male">
+      <label class="form-check-label" for="Male">
+        Male
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="gender" id="Female" value="Female">
+      <label class="form-check-label" for="Female">
+        Female
+      </label>
+    </div>
+    <br />
+
+    Birthday: <input type="date" min="1994-01-01" max="2018-12-31" asp-for="Birthday" class="form-control" />
+    <span asp-validation-for="Birthday" class="text-danger"></span> <br />
+
+    Address: <input type="text" asp-for="Address" class="form-control" />
+    <span asp-validation-for="Address" class="text-danger"></span> <br />
+
+    <input type="submit" value="Submit" class="btn btn-success" />
+    <a href="/customer" class="btn btn-outline-primary">Back</a>
+</form>

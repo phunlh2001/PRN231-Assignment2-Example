@@ -1,0 +1,20 @@
+﻿@model CustomerViewModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete Customer</h2>
+
+<form action="delete" method="post">
+    ID: <input asp-for="Id" class="form-control" readonly /> <br />
+    Username: <input asp-for="Username" class="form-control" readonly /> <br />
+    Password: <input asp-for="Password" class="form-control" readonly /> <br />
+    Full name: <input asp-for="Fullname" class="form-control" readonly /> <br />
+    Gender: <input asp-for="Gender" class="form-control" readonly /> <br />
+    Birthday: <input asp-for="Birthday" class="form-control" readonly /> <br />
+    Address: <input asp-for="Address" class="form-control" readonly /> <br />
+
+    <input type="submit" value="Delete" class="btn btn-danger" />
+    <a href="/customer" class="btn btn-outline-primary">Back</a>
+</form>
