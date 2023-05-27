@@ -102,18 +102,24 @@ namespace MVC_Client.Controllers
         public async Task<IActionResult> Update(int id, bool gender, CustomerViewModel obj)
         {
             var cus = await client.GetApi<CustomerViewModel>($"{api}/{id}");
-
             if (ModelState.IsValid)
             {
-                var customerData = await client.GetApi<Customer>($"{api}/{id}");
+                if (gender)
+                    obj.Gender = "Male";
+                else
+                    obj.Gender = "Female";
 
-                HttpResponseMessage res = await client.PatchApi(customerData, $"{api}/{id}");
+                if (obj.Birthday != null) 
+                    obj.Birthday = DateTime.Parse(obj.Birthday).ToString("dd/MM/yyyy");
+
+                HttpResponseMessage res = await client.PatchApi(obj, $"{api}/{id}");
                 if (res.StatusCode == HttpStatusCode.OK)
                 {
                     return Redirect("/customer");
                 }
             }
             return View(cus);
+
         }
         #endregion
 
