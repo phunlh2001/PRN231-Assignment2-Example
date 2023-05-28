@@ -18,13 +18,9 @@ namespace MVC_Client.Helper
             string? valueData;
 
             if (jsonData.ContainsKey("value"))
-            {
                 valueData = jsonData["value"]!.ToString();
-            }
             else
-            {
                 valueData = jsonData.ToString();
-            }
 
             var opt = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
             var obj = JsonSerializer.Deserialize<T>(valueData, opt);

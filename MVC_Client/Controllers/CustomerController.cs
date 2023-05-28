@@ -41,10 +41,7 @@ namespace MVC_Client.Controllers
          * Create View
         */
         [HttpGet("add", Name = "add")]
-        public IActionResult Create()
-        {
-            return View();
-        }
+        public IActionResult Create() => View();
 
         /**
          * [POST]
