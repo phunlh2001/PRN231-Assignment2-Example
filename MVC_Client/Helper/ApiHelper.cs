@@ -8,6 +8,8 @@ namespace MVC_Client.Helper
     {
         /**
          * [GET]
+         * @param {string} api
+         * @returns {T}
         */
         public static async Task<T> GetApi<T>(this HttpClient client, string api)
         {
@@ -29,36 +31,23 @@ namespace MVC_Client.Helper
 
         /**
          * [POST]
+         * @param {Object} obj
+         * @param {string} api
+         * @param {string} method
+         * @returns {HttpResponseMessage}
         */
-        public static async Task<HttpResponseMessage> PostApi<T>(this HttpClient client, T obj, string api)
+        public static async Task<HttpResponseMessage> PostOrPutApi<T>(this HttpClient client, T obj, string api, string method)
         {
             string data = JsonSerializer.Serialize(obj);
             var content = new StringContent(data, Encoding.UTF8, "application/json");
-            HttpResponseMessage res = await client.PostAsync(api, content);
 
-            return res;
-        }
-
-        /**
-         * [PUT]
-        */
-        public static async Task<HttpResponseMessage> PutApi<T>(this HttpClient client, T obj, string api)
-        {
-            string data = JsonSerializer.Serialize(obj);
-            var content = new StringContent(data, Encoding.UTF8, "application/json");
-            HttpResponseMessage res = await client.PutAsync(api, content);
-
-            return res;
-        }
-
-        /**
-         * [PATCH]
-        */
-        public static async Task<HttpResponseMessage> PatchApi<T>(this HttpClient client, T obj, string api)
-        {
-            string data = JsonSerializer.Serialize(obj);
-            var content = new StringContent(data, Encoding.UTF8, "application/json");
-            HttpResponseMessage res = await client.PatchAsync(api, content);
+            HttpResponseMessage res;
+            if (method == "POST")
+                res = await client.PostAsync(api, content);
+            else if (method == "PUT")
+                res = await client.PutAsync(api, content);
+            else
+                throw new Exception("Accept POST or PUT only");
 
             return res;
         }
